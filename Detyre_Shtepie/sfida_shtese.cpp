@@ -45,14 +45,13 @@ class Contact {
     string number;
 
     Contact() {
-        cout << "Keni mberri ne konstruktor!";
     }
 
     Contact(string name, string number) {
         this->name = name;
         this->number = number;
+        cout << "U krijua kontakti: " << name << endl;
     }
-
 };
 
 class PhoneBook {
@@ -61,6 +60,18 @@ class PhoneBook {
     int size;
     int count;
     string name;
+
+    void resize() {
+        int newSize = size * 2;
+        Contact* newContacts = new Contact[newSize];
+        for(int i = 0; i < count; i++) {
+            newContacts[i] = contacts[i];
+        }
+        delete[] contacts; 
+        contacts = newContacts;
+        size = newSize;
+    }
+
 
     public:
     PhoneBook(int size, string name) {
@@ -75,11 +86,16 @@ class PhoneBook {
     }
 
     void addContact(string name, string number) {
+        if (count == size) 
+        {
+            resize();
+        }
+        
         if(count < size) {
             contacts[count] = Contact(name, number);
             count++;
         } else {
-            cout << "Phonebook is full!" << endl;
+            cout << "Phonebook eshte mbushur" << endl;
         }
     }
 
@@ -114,8 +130,39 @@ class PhoneBook {
 };
 
 int main() {
-    PhoneBook pb(100, "My Phonebook");
+    PhoneBook pb(1, "My Phonebook");
     int option;
+    
+    do
+    {
+        cout << "Pershendetje, miresevini ne phonebook, zgjidheni njerin nga 4 opsionet te cilat i ofrojme:" << endl <<
+        "1 - Fut" << endl <<
+        "2 - Azhuro" << endl <<
+        "3 - Listo" << endl <<
+        "4 - Perfundo" << endl << "----------------------------------" << endl;
+        cin >> option;
 
+        if (option == 1)
+        {
+            string name, number;
+            cin.ignore();
+            cout << "Shkruani emrin: " <<endl;
+            getline(cin, name);
+            cout << "Shkruani numrin: " << endl;
+            cin >> number;
+            pb.addContact(name, number);
+        } else if(option == 2) {
+            string name, number;
+            cin.ignore();
+            cout << "Shkruani emrin: " <<endl;
+            getline(cin, name);
+            cout << "Shkruani numrin: " << endl;
+            cin >> number;
+            pb.editContacts(name, number);
+        } else if(option == 3) {
+            pb.listContacts();
+        }
+    } while (option != 4);
+    
     return 0;
 }
