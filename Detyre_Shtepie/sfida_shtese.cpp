@@ -56,28 +56,66 @@ class Contact {
 };
 
 class PhoneBook {
-    int ngritja = 0;
+    private:
+    Contact* contacts;
+    int size;
+    int count;
     string name;
 
-    PhoneBook(int ngritja, string name) {
-        this->ngritja = ngritja;
+    public:
+    PhoneBook(int size, string name) {
+        this->size = size;
         this->name = name;
+        contacts = new Contact[size];
+        count = 0;
     }
 
-    void addContact(string name, int ngritja) {
+    ~PhoneBook() {
+        delete[] contacts;
+    }
 
+    void addContact(string name, string number) {
+        if(count < size) {
+            contacts[count] = Contact(name, number);
+            count++;
+        } else {
+            cout << "Phonebook is full!" << endl;
+        }
+    }
+
+    void listContacts() {
+        for(int i = 0; i < count; i++) {
+            cout << contacts[i].name << " | " << contacts[i].number << endl;
+        }
+    }
+
+    void editContacts(string name, string newNumber) {
+        for (int i = 0; i < count; i++)
+        {
+            if (contacts[i].name == name)
+            {
+                contacts[i].number = newNumber;
+                cout << "Numri u azhurua!" << endl;
+                return;
+            }
+        }
+        cout << "Kontakti nuk u gjet!" << endl;
+    }
+
+    void findNumber(string name) {
+        for(int i = 0; i < count; i++) {
+            if (contacts[i].name == name)
+            {
+                cout << "Numri juaj eshte: " << contacts[i].number << endl;
+            }
+        }
+        cout << "Kontakti nuk u gjet!" << endl;
     }
 };
 
 int main() {
-    string output;
-
-    cout << "Pershendetje, keni mberri tek nderfaqja e phonebook-it: keto jane opsionet zgjidheni njeren: "<< endl << "1 - Fut" <<
-    endl << "2 - Azhuro" << endl << "3 - Listo" << endl << "4 - Perfundo" << endl;
-    cin >> output;
-
-    Contact c;
-    PhoneBook ;
+    PhoneBook pb(100, "My Phonebook");
+    int option;
 
     return 0;
 }
