@@ -181,3 +181,54 @@ int main() {
 
     return 0;
 }*/
+
+/*1. Të definohet funksioni fillVector, i cili pranon dy parametra: një vektor me numra të
+plotë dhe një numër të plotë. Funksioni në fund kthen si rezultat një vektor me numra të
+plotë – vector<int> fillVector(vector<int> v, int m) (1 pikë)
+2. Funksioni ka për detyrë që në rast se vektori i pranuar si argument është i zbrazët, të
+shtojë brenda vektorit vlerën e argumentit të dytë të funksionit. (1 pikë)
+3. Në rast se vektori i pranuar nuk është i zbrazët, të lexohen numra nga tastiera për aq sa
+është vlera e parametrit të dytë të funksionit fillVector dhe numrat e lexuar të shtohen
+brenda vektorit. Si për pikën 2, ashtu edhe për pikën 3, funksioni në fund duhet të kthej
+vektorin me vlerat që ka brenda. (1 pikë)
+4. Brenda funksionit main, të thirret funksioni fillVector, me një vektor të zbrazët dhe
+argumentet tjera të nevojshme. Pas thirrjes së funksionit të printohet madhësia e vektorit
+(1 pikë)
+5. Brenda funksionit main, të thirret funksioni fillVector me një vektor jo të zbrazët dhe
+argumentet tjera të nevojshme. Në fund të printohen anëtarët e vektorit në fjalë. (1 pikë)*/
+
+#include <vector>
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+vector <int> fillVector(vector <int> v, int m) {
+    if (v.empty()) 
+    {
+        v.push_back(m);
+        return v;
+    } else {
+        for(int i = 0; i < m; i++) {
+            cout << v.at(i) << endl;
+            v.push_back(v.at(i));
+        }
+        return v;
+    }
+}
+
+int main() {
+    vector <int> zbrazet = {};
+    vector <int> mbushur = {1,2,3,4,5,6,7,8};
+    vector <int> print = {};
+    int const n = 7;
+
+    int v = fillVector(zbrazet, n).size();
+    print = fillVector(mbushur, n);
+
+    cout << "Madhesia e vektorit te zbrazet eshte: " << v << endl;
+    for(int i = 0; i < n; i++) {
+        cout << print.at(i) << endl;
+    }
+
+    return 0;
+}
